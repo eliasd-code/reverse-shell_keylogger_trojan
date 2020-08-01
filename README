@@ -1,9 +1,0 @@
-INSTALLATION:
-1. Die scripts alle in einem ordner lassen
-2. als erstes das payload_builder.py per "python [DATEI] build" bauen
-3. in den Build Ordner gehen und den win.exe ordner zu "payload" umbenennen
-4. den "payload" ordner zu "payload.zip" komprimieren
-5. den payload zip ordner kopieren und dort hin einfügen wo die anderen scripts sind
-6. den "build" ordner löschen
-7. den "packer_builder.py bauen und die payload.zip in den ordner mit der packer.exe hinzufügen
-8. packer.exe starten
