@@ -11,7 +11,9 @@ import os
 class email_sender_class:
     def email_sender_funk(self,datei_pfad,datei_name):
         global connection_on
+        connection_on=""
 
+        
         # Email_Infos
         me=""   #Sender E-Mail
         password=""    #Password des senders
@@ -68,6 +70,7 @@ class email_sender_class:
                 connection_on=1 # Internet ist an
 
         except socket.gaierror:
+                connection_on=0
                 datei_stockt_stagged()
                 internet_checker.start()
                         

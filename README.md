@@ -4,7 +4,8 @@
 this is a trojan project that i am constantly developing if a new version comes out it has been tested by me and should therefore be stable
 
 EN: INSTALLATION:
-the installation must be done on windows!
+The installation must be done on windows!
+The paths have to be adjusted in the "keylogger.py" and "email_sender.py"!
 1. Keep the scripts all in one folder
 2. First build the builder_master.py using "python [FILE] build"
 3. Go to the build folder and rename the win.exe folder to "master"
@@ -15,9 +16,9 @@ the installation must be done on windows!
 8. Start installer.exe
 ATTENTION! You have to go to "email_sender.py" before you build all this and enter your sender and recipient email as well as the password for the sender. should be a matter of course
 
-
 DE: INSTALLATION:
-die installation muss auf windows erfolgen!
+Die installation muss auf windows erfolgen!
+Die Pfade müssen in der "keylogger.py" und "email_sender.py" angepasst werden!
 1. Die scripts alle in einem ordner lassen
 2. als erstes das builder_master.py per "python [DATEI] build" bauen
 3. in den Build Ordner gehen und den win.exe ordner zu "master" umbenennen
