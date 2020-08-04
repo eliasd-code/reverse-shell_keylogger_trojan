@@ -16,6 +16,9 @@ The paths have to be adjusted in the "keylogger.py" and "email_sender.py"!
 8. Start installer.exe
 ATTENTION! You have to go to "email_sender.py" before you build all this and enter your sender and recipient email as well as the password for the sender. should be a matter of course
 
+if you want to learn more about hacking you should have a look here --> https://hackenlernen.com/buecher.php
+
+
 DE: INSTALLATION:
 Die installation muss auf windows erfolgen!
 Die Pfade müssen in der "keylogger.py" und "email_sender.py" angepasst werden!
@@ -31,3 +34,4 @@ ACHTUNG!
 du musst bevor du das alles baust in den "email_sender.py" gehen und dort deine sender und empfänger email so wie das password für den sender eingeben.
 sollte selbstverständlich sein
 
+wenn du mehr zum thema hacken lernen möchtest solltest du hier vorbei schauen --> https://hackenlernen.com/buecher.php
