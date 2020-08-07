@@ -6,8 +6,6 @@ import socket
 from threading import Thread
 import os
 
-#ACHTUNG!!
-#bei Login problemen schauen ob die 'PO3' option im email user aktiv ist !
 class email_sender_class:
     def email_sender_funk(self,datei_pfad,datei_name):
         global connection_on
