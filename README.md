@@ -1,4 +1,3 @@
-# big-payload
 # by eliasd
 
 this is a trojan project that i am constantly developing if a new version comes out it has been tested by me and should therefore be stable
