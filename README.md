@@ -1,6 +1,6 @@
 # by eliasd
 
-this is a trojan project
+Just for fun projekt
 
 INSTALLATION:
 The installation must be done on windows!
