@@ -1,6 +1,6 @@
 # by eliasd
 
-this is a trojan project that i am constantly developing if a new version comes out it has been tested by me and should therefore be stable
+this is a trojan project
 
 INSTALLATION:
 The installation must be done on windows!
