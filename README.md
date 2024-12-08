@@ -1,4 +1,4 @@
-(Das ist mein erster Trojaner den ich 2017 aus Spaß Programmiert hatte)
+(Das ist meine erste Malware, die ich 2017 aus spaß programmiert habe)
 
 # by eliasd
 
