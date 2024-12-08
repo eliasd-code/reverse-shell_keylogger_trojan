@@ -1,3 +1,5 @@
+(Das ist mein erster Trojaner den ich 2017 aus Spaß Programmiert hatte)
+
 # by eliasd
 
 Just for fun projekt
